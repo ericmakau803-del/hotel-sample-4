@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Njiwa — Narok</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --charcoal:#20231D;
+    --charcoal-2:#2A2E22;
+    --charcoal-3:#343827;
+    --gold:#D9A441;
+    --gold-dim:#B8862F;
+    --olive:#5C7048;
+    --olive-deep:#3E4D30;
+    --cream:#EDE6D6;
+    --cream-dim:#DCD2B9;
+    --plum:#5C3A4E;
+    --plum-deep:#42293A;
+    --ember:#B5502D;
+    --ink:#1A1B16;
+    --line-dark: rgba(237,230,214,0.14);
+    --line-light: rgba(26,27,22,0.12);
+    --radius: 4px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    margin:0;
+    color:inherit;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;}
+  input,select{font-family:inherit;}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:12px 22px;border-radius:var(--radius);
+    font-weight:600;font-size:14.5px;
+    transition:transform .12s ease, opacity .12s ease;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn-gold{background:var(--gold);color:var(--ink);}
+  .btn-gold:hover{background:#E5B65C;}
+  .btn-ghost-dark{background:transparent;color:var(--cream);border:1px solid var(--line-dark);}
+  .btn-ghost-dark:hover{border-color:var(--gold);color:var(--gold);}
+  .btn-ghost-light{background:transparent;color:var(--ink);border:1px solid var(--line-light);}
+  .btn-ghost-light:hover{border-color:var(--ink);}
+  .btn-olive{background:var(--olive);color:#fff;}
+  .btn-olive:hover{background:#6A8054;}
+  .btn-ember{background:var(--ember);color:#fff;}
+  .btn-ember:hover{background:#C45F38;}
+  .btn-sm{padding:7px 14px;font-size:13px;border-radius:3px;}
+  .btn-disabled{opacity:.35;pointer-events:none;}
+  .btn-block{width:100%;justify-content:center;}
+
+  /* ===== SITE HEADER ===== */
+  .site-header{
+    position:sticky;top:0;z-index:40;
+    background:var(--charcoal);
+    border-bottom:1px solid var(--line-dark);
+  }
+  .site-header .wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    height:72px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;color:var(--cream);}
+  .brand svg{width:30px;height:18px;color:var(--gold);}
+  .brand .name{font-family:'Fraunces',serif;font-weight:800;font-size:22px;letter-spacing:.02em;}
+  .nav-links{display:flex;align-items:center;gap:28px;}
+  .nav-links a{color:var(--cream-dim);font-size:14.5px;font-weight:500;}
+  .nav-links a:hover{color:var(--gold);}
+  .header-actions{display:flex;align-items:center;gap:18px;}
+  .staff-link{font-size:13px;color:var(--cream-dim);opacity:.75;}
+  .staff-link:hover{color:var(--gold);opacity:1;}
+  .cart-btn{
+    position:relative;display:flex;align-items:center;gap:8px;
+    background:var(--charcoal-3);color:var(--cream);
+    padding:9px 14px;border-radius:var(--radius);font-size:14px;font-weight:600;
+  }
+  .cart-btn:hover{background:var(--charcoal-2);}
+  .cart-count{
+    background:var(--gold);color:var(--ink);
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+    border-radius:50%;min-width:20px;height:20px;display:flex;align-items:center;justify-content:center;
+    padding:0 4px;
+  }
+
+  /* ===== HERO ===== */
+  .hero{
+    background:var(--charcoal);
+    color:var(--cream);
+    position:relative;
+    overflow:hidden;
+    padding:96px 0 110px;
+  }
+  .hero-flight{
+    position:absolute;top:-20px;right:-40px;width:520px;height:420px;
+    opacity:.55;pointer-events:none;
+  }
+  .hero .wrap{position:relative;z-index:2;}
+  .hero h1{
+    font-size:clamp(44px,7vw,86px);
+    line-height:.95;
+    letter-spacing:-0.01em;
+    margin:18px 0 22px;
+  }
+  .hero p.lede{
+    max-width:480px;font-size:18px;color:var(--cream-dim);margin-bottom:36px;
+  }
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
+  .location-pill{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;
+    color:var(--cream-dim);margin-top:34px;
+  }
+  .location-pill .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);}
+
+  @media (prefers-reduced-motion: no-preference){
+    .hero-bird{ animation: drift 7s ease-in-out infinite; }
+  }
+  @keyframes drift{
+    0%,100%{ transform: translate(0,0); }
+    50%{ transform: translate(-6px,6px); }
+  }
+
+  /* ===== SECTIONS ===== */
+  section{padding:74px 0;}
+  .section-head{margin-bottom:40px;max-width:560px;}
+  .section-head h2{font-size:clamp(28px,4vw,38px);margin:8px 0 12px;}
+  .section-head p{color:#4a4c40;font-size:15.5px;}
+
+  /* ===== MENU ===== */
+  .menu-section{background:var(--cream);}
+  .category-block{margin-bottom:44px;}
+  .category-title{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--olive-deep);
+    border-bottom:1px solid var(--line-light);
+    padding-bottom:10px;margin-bottom:18px;
+  }
+  .item-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  .item-card{
+    background:#fff;border:1px solid var(--line-light);border-radius:var(--radius);
+    padding:18px;display:flex;justify-content:space-between;gap:12px;
+  }
+  .item-card .info h3{font-size:16.5px;font-weight:700;margin-bottom:4px;}
+  .item-card .info p{font-size:13.5px;color:#6b6c5f;margin:0 0 10px;}
+  .item-card .price{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:14.5px;color:var(--olive-deep);}
+  .item-add{
+    display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+    min-width:64px;
+  }
+  .add-circle{
+    width:34px;height:34px;border-radius:50%;background:var(--charcoal);color:var(--cream);
+    display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;
+  }
+  .add-circle:hover{background:var(--gold);color:var(--ink);}
+  .item-qty-badge{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--gold-dim);margin-top:8px;height:14px;
+  }
+
+  /* ===== HOW TO ORDER ===== */
+  .howto-section{background:var(--olive-deep);color:var(--cream);}
+  .howto-section .section-head p{color:var(--cream-dim);}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+  .step{background:rgba(237,230,214,0.06);border:1px solid var(--line-dark);border-radius:var(--radius);padding:22px 18px;}
+  .step .num{font-family:'IBM Plex Mono',monospace;color:var(--gold);font-size:13px;margin-bottom:10px;}
+  .step h3{font-size:16px;margin-bottom:8px;}
+  .step p{font-size:13.5px;color:var(--cream-dim);margin:0;}
+  .paybill-note{
+    margin-top:30px;background:rgba(217,164,65,0.1);border:1px dashed var(--gold);
+    border-radius:var(--radius);padding:16px 20px;font-size:14px;color:var(--cream);
+  }
+
+  /* ===== TRACK ORDER ===== */
+  .track-section{background:var(--cream);}
+  .track-box{
+    background:#fff;border:1px solid var(--line-light);border-radius:var(--radius);
+    padding:26px;max-width:520px;
+  }
+  .track-row{display:flex;gap:10px;}
+  .track-row input{
+    flex:1;padding:11px 14px;border:1px solid var(--line-light);border-radius:3px;
+    font-family:'IBM Plex Mono',monospace;font-size:14px;text-transform:uppercase;
+  }
+  .track-result{margin-top:16px;font-size:14.5px;padding:12px 14px;border-radius:3px;display:none;}
+  .track-result.show{display:block;}
+  .track-result.pending{background:rgba(217,164,65,0.15);color:#7a5a1f;}
+  .track-result.confirmed{background:rgba(92,112,72,0.15);color:#3e4d30;}
+  .track-result.cancelled{background:rgba(181,80,45,0.15);color:#8a3d22;}
+  .track-result.notfound{background:rgba(0,0,0,0.06);color:#444;}
+
+  /* ===== FOOTER ===== */
+  .site-footer{background:var(--charcoal);color:var(--cream-dim);padding:48px 0 30px;}
+  .footer-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:26px;}
+  .footer-grid .brand{margin-bottom:10px;}
+  .footer-grid h4{font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin-bottom:10px;font-family:'IBM Plex Mono',monospace;}
+  .footer-grid p, .footer-grid a{font-size:14px;display:block;margin-bottom:6px;}
+  .footer-bottom{
+    margin-top:34px;padding-top:20px;border-top:1px solid var(--line-dark);
+    font-size:12.5px;color:#7e8073;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  }
+
+  /* ===== CART DRAWER ===== */
+  .overlay{
+    position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:60;
+    opacity:0;pointer-events:none;transition:opacity .2s ease;
+  }
+  .overlay.open{opacity:1;pointer-events:auto;}
+  .cart-drawer{
+    position:fixed;top:0;right:0;height:100%;width:400px;max-width:92vw;
+    background:#fff;z-index:70;box-shadow:-12px 0 30px rgba(0,0,0,.18);
+    transform:translateX(100%);transition:transform .25s ease;
+    display:flex;flex-direction:column;
+  }
+  .cart-drawer.open{transform:translateX(0);}
+  .cart-head{
+    padding:22px 22px 16px;border-bottom:1px solid var(--line-light);
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .cart-head h3{font-size:19px;}
+  .cart-close{font-size:22px;color:#888;}
+  .cart-items{flex:1;overflow-y:auto;padding:14px 22px;}
+  .cart-empty{color:#888;font-size:14px;padding:30px 0;text-align:center;}
+  .cart-line{
+    display:flex;justify-content:space-between;align-items:center;gap:10px;
+    padding:14px 0;border-bottom:1px solid var(--line-light);
+  }
+  .cart-line .name{font-size:14.5px;font-weight:600;}
+  .cart-line .line-price{font-family:'IBM Plex Mono',monospace;font-size:13px;color:#777;}
+  .qty-stepper{display:flex;align-items:center;gap:8px;}
+  .qty-stepper button{
+    width:24px;height:24px;border-radius:50%;border:1px solid var(--line-light);
+    font-size:14px;display:flex;align-items:center;justify-content:center;
+  }
+  .qty-stepper button:hover{border-color:var(--ink);}
+  .qty-stepper .n{font-family:'IBM Plex Mono',monospace;font-size:13.5px;min-width:16px;text-align:center;}
+  .cart-foot{padding:18px 22px 24px;border-top:1px solid var(--line-light);}
+  .cart-total-row{display:flex;justify-content:space-between;font-size:16px;font-weight:700;margin-bottom:16px;}
+  .cart-total-row .amt{font-family:'IBM Plex Mono',monospace;}
+
+  /* ===== CHECKOUT MODAL ===== */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:90;
+    display:none;align-items:center;justify-content:center;padding:20px;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal{
+    background:#fff;border-radius:6px;max-width:460px;width:100%;
+    max-height:90vh;overflow-y:auto;padding:30px 28px;position:relative;
+  }
+  .modal-close{position:absolute;top:18px;right:20px;font-size:22px;color:#999;}
+  .modal h3{font-size:22px;margin-bottom:6px;}
+  .modal .sub{font-size:13.5px;color:#777;margin-bottom:20px;}
+  .receipt{
+    border:1px dashed #ccc;border-radius:4px;padding:18px;margin-bottom:18px;
+    background:#FAF8F2;
+  }
+  .receipt-row{display:flex;justify-content:space-between;font-size:13.5px;padding:5px 0;color:#444;}
+  .receipt-row.total{font-weight:700;font-size:15px;border-top:1px dashed #ccc;margin-top:8px;padding-top:10px;color:var(--ink);}
+  .pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;}
+  .pay-field{background:var(--charcoal);color:var(--cream);border-radius:4px;padding:14px;}
+  .pay-field .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin-bottom:5px;}
+  .pay-field .val{font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600;}
+  .modal-note{font-size:13px;color:#777;margin-bottom:20px;}
+  .confirm-screen{display:none;text-align:center;padding:10px 0;}
+  .confirm-screen.show{display:block;}
+  .confirm-screen .ref-big{font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:600;color:var(--olive-deep);margin:14px 0;}
+
+  /* ===== DASHBOARD ===== */
+  .dashboard-view{min-height:100vh;background:var(--charcoal-2);}
+  .login-screen{
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:var(--charcoal);
+  }
+  .login-card{
+    background:var(--charcoal-2);border:1px solid var(--line-dark);border-radius:6px;
+    padding:40px 36px;width:100%;max-width:380px;color:var(--cream);
+  }
+  .login-card .brand{margin-bottom:26px;justify-content:center;}
+  .login-card h2{font-size:20px;margin-bottom:6px;text-align:center;}
+  .login-card p.sub{font-size:13.5px;color:var(--cream-dim);text-align:center;margin-bottom:26px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:12.5px;color:var(--cream-dim);margin-bottom:6px;}
+  .field input, .field select{
+    width:100%;padding:11px 12px;border-radius:4px;border:1px solid var(--line-dark);
+    background:var(--charcoal-3);color:var(--cream);font-size:14px;
+  }
+  .login-error{color:#E08A6A;font-size:13px;margin-bottom:12px;display:none;}
+  .login-error.show{display:block;}
+  .demo-hint{font-size:11.5px;color:#888;margin-top:18px;text-align:center;line-height:1.6;}
+
+  .dash-shell{display:none;min-height:100vh;}
+  .dash-shell.show{display:flex;}
+  .dash-sidebar{
+    width:230px;background:var(--charcoal);color:var(--cream);
+    padding:26px 18px;flex-shrink:0;display:flex;flex-direction:column;
+  }
+  .dash-sidebar .brand{margin-bottom:34px;padding:0 6px;}
+  .dash-tab{
+    display:flex;align-items:center;gap:10px;
+    padding:11px 14px;border-radius:4px;font-size:14px;color:var(--cream-dim);margin-bottom:4px;
+    width:100%;text-align:left;
+  }
+  .dash-tab:hover{background:var(--charcoal-2);}
+  .dash-tab.active{background:var(--plum);color:#fff;}
+  .dash-sidebar .spacer{flex:1;}
+  .dash-content{flex:1;padding:38px 40px;max-width:980px;}
+  .dash-content h2{color:var(--cream);font-size:24px;margin-bottom:6px;}
+  .dash-content .desc{color:#A7AA98;font-size:14px;margin-bottom:26px;}
+  .dash-panel{display:none;}
+  .dash-panel.show{display:block;}
+  .dash-table{width:100%;border-collapse:collapse;background:var(--charcoal-2);border-radius:6px;overflow:hidden;}
+  .dash-table th{
+    text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;
+    color:#9A9D8A;padding:13px 16px;border-bottom:1px solid var(--line-dark);font-weight:600;
+  }
+  .dash-table td{padding:13px 16px;border-bottom:1px solid var(--line-dark);color:var(--cream);font-size:14px;}
+  .dash-table tr:last-child td{border-bottom:none;}
+  .badge{font-size:11.5px;font-family:'IBM Plex Mono',monospace;padding:4px 9px;border-radius:20px;}
+  .badge.pending{background:rgba(217,164,65,0.18);color:var(--gold);}
+  .badge.confirmed{background:rgba(92,112,72,0.25);color:#8FB36E;}
+  .badge.cancelled{background:rgba(181,80,45,0.2);color:#E08A6A;}
+  .dash-table input[type=number]{
+    width:90px;padding:6px 8px;border-radius:3px;border:1px solid var(--line-dark);
+    background:var(--charcoal-3);color:var(--cream);font-family:'IBM Plex Mono',monospace;
+  }
+  .add-form{
+    background:var(--charcoal-2);border:1px solid var(--line-dark);border-radius:6px;
+    padding:22px;margin-bottom:24px;
+  }
+  .add-form h3{color:var(--cream);font-size:15px;margin-bottom:16px;font-family:'Inter',sans-serif;font-weight:600;}
+  .form-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-items:end;}
+  .form-row .field{margin-bottom:0;}
+  .table-wrap{margin-bottom:30px;overflow-x:auto;}
+  .activity-log{
+    background:var(--charcoal-2);border:1px solid var(--line-dark);border-radius:6px;padding:18px 20px;
+  }
+  .activity-log h4{color:var(--cream-dim);font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;font-family:'IBM Plex Mono',monospace;}
+  .activity-log ul{margin:0;padding:0;list-style:none;}
+  .activity-log li{
+    font-size:13px;color:#B7B9A7;padding:7px 0;border-bottom:1px solid var(--line-dark);
+    display:flex;justify-content:space-between;gap:10px;
+  }
+  .activity-log li:last-child{border-bottom:none;}
+  .activity-log .ts{font-family:'IBM Plex Mono',monospace;color:#787A6B;font-size:11.5px;white-space:nowrap;}
+  .emp-count{color:var(--gold);font-family:'IBM Plex Mono',monospace;}
+  .dash-footnote{margin-top:30px;font-size:12px;color:#6E705F;}
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width:760px){
+    .nav-links{display:none;}
+    .item-grid{grid-template-columns:1fr;}
+    .steps{grid-template-columns:1fr 1fr;}
+    .form-row{grid-template-columns:1fr 1fr;}
+    .pay-grid{grid-template-columns:1fr;}
+    .dash-shell.show{flex-direction:column;}
+    .dash-sidebar{width:100%;flex-direction:row;overflow-x:auto;align-items:center;padding:14px 16px;}
+    .dash-sidebar .brand{display:none;}
+    .dash-sidebar .spacer{display:none;}
+    .dash-tab{white-space:nowrap;}
+    .dash-content{padding:26px 18px;}
+    .footer-grid{flex-direction:column;}
+  }
+  @media (max-width:500px){
+    .steps{grid-template-columns:1fr;}
+    .hero{padding:64px 0 70px;}
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ================= CUSTOMER SITE ================= -->
+  <div id="site-view">
+
+    <header class="site-header">
+      <div class="wrap">
+        <div class="brand">
+          <svg viewBox="0 0 100 60" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"><path d="M5 50 Q 30 10 50 28 Q 70 10 95 50"/></svg>
+          <span class="name">NJIWA</span>
+        </div>
+        <nav class="nav-links">
+          <a href="#menu">Menu</a>
+          <a href="#how-to-order">How to order</a>
+          <a href="#track">Track order</a>
+          <a href="#visit">Visit us</a>
+        </nav>
+        <div class="header-actions">
+          <a href="#" class="staff-link" onclick="goToDashboard();return false;">Staff login</a>
+          <button class="cart-btn" onclick="openCart()">
+            Cart <span class="cart-count" id="cart-count">0</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <svg class="hero-flight" viewBox="0 0 520 420" fill="none">
+        <path d="M40 40 C 200 20, 380 90, 480 220" stroke="#D9A441" stroke-width="2" stroke-dasharray="3 9" opacity="0.5"/>
+        <g transform="translate(440,190)">
+          <g class="hero-bird">
+            <svg width="46" height="28" viewBox="0 0 100 60" fill="none" stroke="#D9A441" stroke-width="7" stroke-linecap="round"><path d="M5 50 Q 30 10 50 28 Q 70 10 95 50"/></svg>
+          </g>
+        </g>
+      </svg>
+      <div class="wrap">
+        <p class="eyebrow">Hotel &amp; Kitchen — Narok, Kenya</p>
+        <h1>Food first.<br>Hospitality<br>that follows.</h1>
+        <p class="lede">Njiwa is built around the kitchen — grills, stews, rice dishes and the everyday Kenyan classics, served properly. Order ahead, pay by Paybill, skip the queue.</p>
+        <div class="hero-ctas">
+          <a href="#menu" class="btn btn-gold">See the menu</a>
+          <a href="#how-to-order" class="btn btn-ghost-dark">How payment works</a>
+        </div>
+        <div class="location-pill"><span class="dot"></span> NAROK TOWN, KENYA — OPEN DAILY, 6:30AM – 10PM</div>
+      </div>
+    </section>
+
+    <section class="menu-section" id="menu">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">The menu</p>
+          <h2>What's cooking today</h2>
+          <p>Prices are kept current by Njiwa's kitchen team. Tap + to add a dish to your order.</p>
+        </div>
+        <div id="menu-categories"></div>
+      </div>
+    </section>
+
+    <section class="howto-section" id="how-to-order">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Paying by M-Pesa</p>
+          <h2>How ordering &amp; payment works</h2>
+          <p>No app, no card. Build your order, pay our Paybill, and our staff confirms it on the spot.</p>
+        </div>
+        <div class="steps">
+          <div class="step"><div class="num">01</div><h3>Build your order</h3><p>Add dishes from the menu above to your cart.</p></div>
+          <div class="step"><div class="num">02</div><h3>Get your reference</h3><p>Checkout gives you a Paybill number and a unique order reference.</p></div>
+          <div class="step"><div class="num">03</div><h3>Pay via M-Pesa</h3><p>Lipa na M-Pesa → Pay Bill → enter the number and your reference as the account number.</p></div>
+          <div class="step"><div class="num">04</div><h3>We confirm it</h3><p>Tap "I've paid" — our staff checks the till and confirms your order.</p></div>
+        </div>
+        <div class="paybill-note">This is a working prototype using manual confirmation by staff. A future version of Njiwa's system can confirm payment automatically the moment it lands, once Njiwa is set up directly with Safaricom for that.</div>
+      </div>
+    </section>
+
+    <section class="track-section" id="track">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Already ordered?</p>
+          <h2>Track your order</h2>
+          <p>Enter the reference you were given at checkout.</p>
+        </div>
+        <div class="track-box">
+          <div class="track-row">
+            <input type="text" id="track-input" placeholder="e.g. NJW-1001">
+            <button class="btn btn-ghost-light" onclick="trackOrder()">Check status</button>
+          </div>
+          <div class="track-result" id="track-result"></div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer" id="visit">
+      <div class="wrap">
+        <div class="footer-grid">
+          <div>
+            <div class="brand">
+              <svg viewBox="0 0 100 60" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"><path d="M5 50 Q 30 10 50 28 Q 70 10 95 50"/></svg>
+              <span class="name" style="color:var(--cream);">NJIWA</span>
+            </div>
+            <p style="max-width:220px;color:#9A9D8A;">A Narok kitchen and hotel, built for people who came mainly for the food.</p>
+          </div>
+          <div>
+            <h4>Visit</h4>
+            <p>Narok Town, Kenya</p>
+            <p>Open daily · 6:30AM – 10PM</p>
+          </div>
+          <div>
+            <h4>Contact</h4>
+            <p>+254 7XX XXX XXX</p>
+            <p>hello@njiwa.example</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 Njiwa Hotel, Narok.</span>
+          <span>Prototype build — demo data only.</span>
+        </div>
+      </div>
+    </footer>
+
+    <div class="overlay" id="cart-overlay" onclick="closeCart()"></div>
+    <aside class="cart-drawer" id="cart-drawer">
+      <div class="cart-head">
+        <h3>Your order</h3>
+        <button class="cart-close" onclick="closeCart()">&times;</button>
+      </div>
+      <div class="cart-items" id="cart-items"></div>
+      <div class="cart-foot">
+        <div class="cart-total-row"><span>Total</span><span class="amt" id="cart-total">KSh 0</span></div>
+        <button class="btn btn-gold btn-block" id="checkout-btn" onclick="openCheckout()">Proceed to pay</button>
+      </div>
+    </aside>
+
+    <div class="modal-overlay" id="checkout-modal">
+      <div class="modal">
+        <button class="modal-close" onclick="closeCheckout()">&times;</button>
+
+        <div id="checkout-step1">
+          <h3>Confirm &amp; pay</h3>
+          <p class="sub">Review your order, then pay via Paybill using the details below.</p>
+          <div class="receipt" id="receipt-lines"></div>
+          <div class="pay-grid">
+            <div class="pay-field"><div class="lbl">Paybill no.</div><div class="val" id="paybill-number">888880</div></div>
+            <div class="pay-field"><div class="lbl">Account no.</div><div class="val" id="checkout-ref">NJW-1000</div></div>
+          </div>
+          <p class="modal-note">Open M-Pesa → Lipa na M-Pesa → Pay Bill. Enter the Paybill number, the account number above as your reference, and the exact total. Then come back here.</p>
+          <button class="btn btn-olive btn-block" onclick="confirmPaid()">I've paid — notify Njiwa</button>
+        </div>
+
+        <div class="confirm-screen" id="checkout-step2">
+          <h3>Thanks — we've got it</h3>
+          <p class="sub">Keep this reference. Our staff will confirm your payment shortly.</p>
+          <div class="ref-big" id="confirmed-ref">NJW-1000</div>
+          <p class="sub">Use "Track your order" on the site at any time with this reference.</p>
+          <button class="btn btn-ghost-light btn-block" onclick="closeCheckout()">Done</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ================= STAFF DASHBOARD ================= -->
+  <div class="dashboard-view" id="dashboard-view" style="display:none;">
+
+    <div class="login-screen" id="login-screen">
+      <div class="login-card">
+        <div class="brand">
+          <svg viewBox="0 0 100 60" fill="none" stroke="#D9A441" stroke-width="6" stroke-linecap="round"><path d="M5 50 Q 30 10 50 28 Q 70 10 95 50"/></svg>
+          <span class="name" style="color:#fff;">NJIWA</span>
+        </div>
+        <h2>Owner &amp; staff dashboard</h2>
+        <p class="sub">Manage prices, employees and incoming orders.</p>
+        <div class="login-error" id="login-error">Incorrect password. Try again.</div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="login-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')attemptLogin()">
+        </div>
+        <button class="btn btn-gold btn-block" onclick="attemptLogin()">Log in</button>
+        <div class="demo-hint">Demo password: <strong>njiwa2026</strong><br>In production this would be a real account with hashed passwords and two-factor login — not a password sitting in the page.</div>
+        <p style="text-align:center;margin-top:18px;"><a href="#" onclick="goToSite();return false;" style="color:#8C8E7C;font-size:13px;">← Back to site</a></p>
+      </div>
+    </div>
+
+    <div class="dash-shell" id="dash-shell">
+      <nav class="dash-sidebar">
+        <div class="brand">
+          <svg viewBox="0 0 100 60" fill="none" stroke="#D9A441" stroke-width="6" stroke-linecap="round"><path d="M5 50 Q 30 10 50 28 Q 70 10 95 50"/></svg>
+          <span class="name" style="color:#fff;font-size:18px;">NJIWA</span>
+        </div>
+        <button class="dash-tab active" id="tabbtn-orders" onclick="showDashTab('orders')">Orders</button>
+        <button class="dash-tab" id="tabbtn-menu" onclick="showDashTab('menu')">Menu &amp; prices</button>
+        <button class="dash-tab" id="tabbtn-employees" onclick="showDashTab('employees')">Employees</button>
+        <div class="spacer"></div>
+        <button class="dash-tab" onclick="logout()">Log out</button>
+      </nav>
+
+      <main class="dash-content">
+
+        <section class="dash-panel show" id="panel-orders">
+          <h2>Orders</h2>
+          <p class="desc">Confirm payment once you've checked it landed in the till, or cancel an order that won't go ahead.</p>
+          <div class="table-wrap">
+            <table class="dash-table">
+              <thead><tr><th>Reference</th><th>Items</th><th>Total</th><th>Status</th><th>Placed</th><th></th></tr></thead>
+              <tbody id="orders-tbody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="dash-panel" id="panel-menu">
+          <h2>Menu &amp; prices</h2>
+          <p class="desc">Update a price and save it — the change is live on the site immediately.</p>
+          <div class="add-form">
+            <h3>Add a new dish</h3>
+            <div class="form-row">
+              <div class="field"><label>Name</label><input type="text" id="new-item-name" placeholder="e.g. Beef Samosa"></div>
+              <div class="field"><label>Category</label><input type="text" id="new-item-cat" placeholder="e.g. Snacks"></div>
+              <div class="field"><label>Price (KSh)</label><input type="number" id="new-item-price" placeholder="200"></div>
+              <button class="btn btn-gold" onclick="addMenuItem()">Add dish</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="dash-table">
+              <thead><tr><th>Dish</th><th>Category</th><th>Price (KSh)</th><th></th><th></th></tr></thead>
+              <tbody id="menu-tbody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="dash-panel" id="panel-employees">
+          <h2>Employees</h2>
+          <p class="desc"><span class="emp-count" id="emp-count">0</span> registered. Njiwa currently plans for around 70 staff across the kitchen, floor and hotel side.</p>
+          <div class="add-form">
+            <h3>Register an employee</h3>
+            <div class="form-row">
+              <div class="field"><label>Full name</label><input type="text" id="new-emp-name" placeholder="e.g. Jane Wanjiru"></div>
+              <div class="field"><label>Role</label><input type="text" id="new-emp-role" placeholder="e.g. Waiter"></div>
+              <div class="field"><label>Phone</label><input type="text" id="new-emp-phone" placeholder="07XXXXXXXX"></div>
+              <div class="field"><label>National ID No.</label><input type="text" id="new-emp-id" placeholder="e.g. 24551234"></div>
+            </div>
+            <div style="margin-top:14px;"><button class="btn btn-gold" onclick="addEmployee()">Register employee</button></div>
+          </div>
+          <div class="table-wrap">
+            <table class="dash-table">
+              <thead><tr><th>Name</th><th>Role</th><th>Phone</th><th>ID No.</th><th></th></tr></thead>
+              <tbody id="emp-tbody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <div class="activity-log">
+          <h4>Recent activity</h4>
+          <ul id="activity-list"></ul>
+        </div>
+        <p class="dash-footnote">Prototype data — everything above resets if this page reloads. A live version stores this in a secured database, not in the browser.</p>
+      </main>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ---------- STATE ----------
+  let menuItems = [
+    {id:1, cat:'Breakfast', name:'Kenyan Chai', desc:'Spiced milk tea, brewed strong.', price:100},
+    {id:2, cat:'Breakfast', name:'White Coffee', desc:'Milky coffee, Narok style.', price:120},
+    {id:3, cat:'Breakfast', name:'Mandazi (3 pcs)', desc:'Lightly sweet fried bread.', price:100},
+    {id:4, cat:'Breakfast', name:'Boiled Eggs (2)', desc:'Served with kachumbari.', price:100},
+    {id:5, cat:'Breakfast', name:'Sausages & Toast', desc:'Beef sausages, buttered toast.', price:250},
+    {id:6, cat:'Grills & Nyama Choma', name:'Beef Nyama Choma (1kg)', desc:'Charcoal-grilled, served with kachumbari.', price:1200},
+    {id:7, cat:'Grills & Nyama Choma', name:'Goat Ribs (1kg)', desc:'Slow-grilled, Maa-style seasoning.', price:1500},
+    {id:8, cat:'Grills & Nyama Choma', name:'Chicken Choma (half)', desc:'Marinated, grilled to order.', price:600},
+    {id:9, cat:'Grills & Nyama Choma', name:'Beef Skewers (4 pcs)', desc:'Mishkaki, grilled over charcoal.', price:400},
+    {id:10, cat:'Stews & Mains', name:'Beef Stew & Rice', desc:'Slow-cooked beef, plain rice.', price:450},
+    {id:11, cat:'Stews & Mains', name:'Matumbo Stew', desc:'Tripe stew, Kenyan style.', price:350},
+    {id:12, cat:'Stews & Mains', name:'Managu & Ugali', desc:'African nightshade, ugali on the side.', price:300},
+    {id:13, cat:'Stews & Mains', name:'Tilapia Stew', desc:'Whole tilapia, tomato sauce.', price:600},
+    {id:14, cat:'Rice, Ugali & Sides', name:'Pilau', desc:'Spiced rice, beef.', price:350},
+    {id:15, cat:'Rice, Ugali & Sides', name:'Biryani', desc:'Beef biryani, boiled egg.', price:450},
+    {id:16, cat:'Rice, Ugali & Sides', name:'Ugali (plain)', desc:'Maize meal, made fresh.', price:100},
+    {id:17, cat:'Rice, Ugali & Sides', name:'Chapati (each)', desc:'Soft, layered flatbread.', price:50},
+    {id:18, cat:'Rice, Ugali & Sides', name:'Mukimo', desc:'Mashed potatoes, maize, greens.', price:250},
+    {id:19, cat:'Beverages', name:'Soda (500ml)', desc:'Assorted flavours, chilled.', price:100},
+    {id:20, cat:'Beverages', name:'Fresh Juice', desc:'Seasonal fruit, no added sugar.', price:150},
+    {id:21, cat:'Beverages', name:'Mineral Water', desc:'500ml, still.', price:80},
+  ];
+  let nextItemId = 22;
+
+  let cart = []; // {id, qty}
+
+  let orders = [
+    {ref:'NJW-1001', items:[{id:14,qty:2},{id:19,qty:2}], total:900, status:'pending', time:'09:14'},
+    {ref:'NJW-1000', items:[{id:6,qty:1},{id:17,qty:4}], total:1400, status:'confirmed', time:'08:52'},
+  ];
+  let orderSeq = 1002;
+
+  let employees = [
+    {id:1, name:'Sarah Chebet', role:'Manager', phone:'0712 345 678', idNo:'24551234'},
+    {id:2, name:'Peter Korir', role:'Chef', phone:'0723 456 789', idNo:'25661234'},
+    {id:3, name:'Mary Naliaka', role:'Waiter', phone:'0734 567 890', idNo:'26771234'},
+  ];
+  let nextEmpId = 4;
+
+  let activityLog = [];
+  let currentCheckoutRef = null;
+  const DEMO_PASSWORD = 'njiwa2026';
+
+  function fmt(n){ return 'KSh ' + n.toLocaleString(); }
+  function nowTime(){ return new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}); }
+  function logActivity(msg){
+    activityLog.unshift({msg, ts: nowTime()});
+    if(activityLog.length > 12) activityLog.pop();
+    renderActivityLog();
+  }
+  function findItem(id){ return menuItems.find(m => m.id === id); }
+
+  // ---------- MENU RENDER ----------
+  function renderMenu(){
+    const cats = [...new Set(menuItems.map(m => m.cat))];
+    const wrap = document.getElementById('menu-categories');
+    wrap.innerHTML = cats.map(cat => {
+      const items = menuItems.filter(m => m.cat === cat);
+      return `<div class="category-block">
+        <div class="category-title">${cat}</div>
+        <div class="item-grid">
+          ${items.map(it => `
+            <div class="item-card">
+              <div class="info">
+                <h3>${it.name}</h3>
+                <p>${it.desc}</p>
+                <div class="price">${fmt(it.price)}</div>
+              </div>
+              <div class="item-add">
+                <button class="add-circle" onclick="addToCart(${it.id})" aria-label="Add ${it.name} to cart">+</button>
+                <div class="item-qty-badge" id="badge-${it.id}"></div>
+              </div>
+            </div>`).join('')}
+        </div>
+      </div>`;
+    }).join('');
+    refreshQtyBadges();
+  }
+
+  function refreshQtyBadges(){
+    menuItems.forEach(it => {
+      const el = document.getElementById('badge-' + it.id);
+      if(!el) return;
+      const line = cart.find(c => c.id === it.id);
+      el.textContent = line ? (line.qty + ' in cart') : '';
+    });
+  }
+
+  // ---------- CART ----------
+  function addToCart(id){
+    const line = cart.find(c => c.id === id);
+    if(line){ line.qty++; } else { cart.push({id, qty:1}); }
+    renderCart();
+    refreshQtyBadges();
+  }
+  function changeQty(id, delta){
+    const line = cart.find(c => c.id === id);
+    if(!line) return;
+    line.qty += delta;
+    if(line.qty <= 0){ cart = cart.filter(c => c.id !== id); }
+    renderCart();
+    refreshQtyBadges();
+  }
+  function cartTotal(){
+    return cart.reduce((sum, c) => sum + (findItem(c.id)?.price || 0) * c.qty, 0);
+  }
+  function renderCart(){
+    const count = cart.reduce((s,c)=>s+c.qty,0);
+    document.getElementById('cart-count').textContent = count;
+    const itemsEl = document.getElementById('cart-items');
+    if(cart.length === 0){
+      itemsEl.innerHTML = '<div class="cart-empty">Your cart is empty. Add a dish from the menu.</div>';
+    } else {
+      itemsEl.innerHTML = cart.map(c => {
+        const it = findItem(c.id);
+        if(!it) return '';
+        return `<div class="cart-line">
+          <div>
+            <div class="name">${it.name}</div>
+            <div class="line-price">${fmt(it.price)} each</div>
+          </div>
+          <div class="qty-stepper">
+            <button onclick="changeQty(${it.id},-1)" aria-label="Remove one">–</button>
+            <span class="n">${c.qty}</span>
+            <button onclick="changeQty(${it.id},1)" aria-label="Add one">+</button>
+          </div>
+        </div>`;
+      }).join('');
+    }
+    document.getElementById('cart-total').textContent = fmt(cartTotal());
+    const btn = document.getElementById('checkout-btn');
+    if(cart.length === 0){ btn.classList.add('btn-disabled'); } else { btn.classList.remove('btn-disabled'); }
+  }
+  function openCart(){
+    document.getElementById('cart-drawer').classList.add('open');
+    document.getElementById('cart-overlay').classList.add('open');
+  }
+  function closeCart(){
+    document.getElementById('cart-drawer').classList.remove('open');
+    document.getElementById('cart-overlay').classList.remove('open');
+  }
+
+  // ---------- CHECKOUT ----------
+  function openCheckout(){
+    if(cart.length === 0) return;
+    orderSeq++;
+    currentCheckoutRef = 'NJW-' + orderSeq;
+    document.getElementById('checkout-ref').textContent = currentCheckoutRef;
+    document.getElementById('receipt-lines').innerHTML = cart.map(c => {
+      const it = findItem(c.id);
+      return `<div class="receipt-row"><span>${it.name} × ${c.qty}</span><span>${fmt(it.price * c.qty)}</span></div>`;
+    }).join('') + `<div class="receipt-row total"><span>Total</span><span>${fmt(cartTotal())}</span></div>`;
+    document.getElementById('checkout-step1').style.display = 'block';
+    document.getElementById('checkout-step2').classList.remove('show');
+    document.getElementById('checkout-modal').classList.add('open');
+    closeCart();
+  }
+  function closeCheckout(){
+    document.getElementById('checkout-modal').classList.remove('open');
+  }
+  function confirmPaid(){
+    const total = cartTotal();
+    orders.unshift({ref: currentCheckoutRef, items: [...cart], total, status:'pending', time: nowTime()});
+    logActivity(`New order ${currentCheckoutRef} submitted — awaiting payment confirmation (${fmt(total)})`);
+    cart = [];
+    renderCart();
+    refreshQtyBadges();
+    renderDashOrders();
+    document.getElementById('checkout-step1').style.display = 'none';
+    document.getElementById('confirmed-ref').textContent = currentCheckoutRef;
+    document.getElementById('checkout-step2').classList.add('show');
+  }
+
+  // ---------- TRACK ORDER ----------
+  function trackOrder(){
+    const ref = document.getElementById('track-input').value.trim().toUpperCase();
+    const result = document.getElementById('track-result');
+    const order = orders.find(o => o.ref === ref);
+    result.className = 'track-result show';
+    if(!order){
+      result.classList.add('notfound');
+      result.textContent = "We couldn't find that reference. Check the code and try again.";
+    } else if(order.status === 'pending'){
+      result.classList.add('pending');
+      result.textContent = `Order ${order.ref}: payment pending confirmation. Our staff will confirm shortly.`;
+    } else if(order.status === 'confirmed'){
+      result.classList.add('confirmed');
+      result.textContent = `Order ${order.ref}: payment confirmed — your order is being prepared.`;
+    } else {
+      result.classList.add('cancelled');
+      result.textContent = `Order ${order.ref}: this order was cancelled. Please speak to the front desk.`;
+    }
+  }
+
+  // ---------- VIEW SWITCH ----------
+  function goToDashboard(){
+    document.getElementById('site-view').style.display = 'none';
+    document.getElementById('dashboard-view').style.display = 'block';
+    window.scrollTo(0,0);
+  }
+  function goToSite(){
+    document.getElementById('dashboard-view').style.display = 'none';
+    document.getElementById('site-view').style.display = 'block';
+    window.scrollTo(0,0);
+  }
+
+  // ---------- AUTH ----------
+  function attemptLogin(){
+    const pw = document.getElementById('login-password').value;
+    if(pw === DEMO_PASSWORD){
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('dash-shell').classList.add('show');
+      document.getElementById('login-error').classList.remove('show');
+      document.getElementById('login-password').value = '';
+    } else {
+      document.getElementById('login-error').classList.add('show');
+    }
+  }
+  function logout(){
+    document.getElementById('dash-shell').classList.remove('show');
+    document.getElementById('login-screen').style.display = 'flex';
+  }
+
+  // ---------- DASH TABS ----------
+  function showDashTab(tab){
+    ['orders','menu','employees'].forEach(t => {
+      document.getElementById('panel-' + t).classList.toggle('show', t === tab);
+      document.getElementById('tabbtn-' + t).classList.toggle('active', t === tab);
+    });
+  }
+
+  // ---------- DASH: ORDERS ----------
+  function orderItemsSummary(order){
+    return order.items.map(i => {
+      const it = findItem(i.id);
+      return it ? `${it.name} ×${i.qty}` : '';
+    }).filter(Boolean).join(', ');
+  }
+  function renderDashOrders(){
+    const tbody = document.getElementById('orders-tbody');
+    tbody.innerHTML = orders.map(o => `
+      <tr>
+        <td class="mono">${o.ref}</td>
+        <td>${orderItemsSummary(o)}</td>
+        <td class="mono">${fmt(o.total)}</td>
+        <td><span class="badge ${o.status}">${o.status}</span></td>
+        <td class="mono">${o.time}</td>
+        <td>
+          ${o.status === 'pending' ? `
+            <button class="btn btn-olive btn-sm" onclick="confirmOrder('${o.ref}')">Confirm payment</button>
+            <button class="btn btn-ember btn-sm" onclick="cancelOrder('${o.ref}')">Cancel</button>` : ''}
+        </td>
+      </tr>`).join('');
+  }
+  function confirmOrder(ref){
+    const o = orders.find(o => o.ref === ref);
+    if(!o) return;
+    o.status = 'confirmed';
+    logActivity(`Payment confirmed for ${ref} (${fmt(o.total)})`);
+    renderDashOrders();
+  }
+  function cancelOrder(ref){
+    const o = orders.find(o => o.ref === ref);
+    if(!o) return;
+    o.status = 'cancelled';
+    logActivity(`Order ${ref} cancelled`);
+    renderDashOrders();
+  }
+
+  // ---------- DASH: MENU ----------
+  function renderDashMenu(){
+    const tbody = document.getElementById('menu-tbody');
+    tbody.innerHTML = menuItems.map(it => `
+      <tr>
+        <td>${it.name}</td>
+        <td>${it.cat}</td>
+        <td><input type="number" id="price-${it.id}" value="${it.price}"></td>
+        <td><button class="btn btn-gold btn-sm" onclick="savePrice(${it.id})">Save</button></td>
+        <td><button class="btn btn-ember btn-sm" onclick="deleteMenuItem(${it.id})">Delete</button></td>
+      </tr>`).join('');
+  }
+  function savePrice(id){
+    const it = findItem(id);
+    const input = document.getElementById('price-' + id);
+    const newPrice = parseInt(input.value, 10);
+    if(isNaN(newPrice) || newPrice < 0) return;
+    const old = it.price;
+    it.price = newPrice;
+    logActivity(`Price updated: ${it.name} — ${fmt(old)} → ${fmt(newPrice)}`);
+    renderMenu();
+  }
+  function deleteMenuItem(id){
+    const it = findItem(id);
+    menuItems = menuItems.filter(m => m.id !== id);
+    logActivity(`Removed dish: ${it.name}`);
+    renderDashMenu();
+    renderMenu();
+  }
+  function addMenuItem(){
+    const name = document.getElementById('new-item-name').value.trim();
+    const cat = document.getElementById('new-item-cat').value.trim() || 'Other';
+    const price = parseInt(document.getElementById('new-item-price').value, 10);
+    if(!name || isNaN(price)) return;
+    menuItems.push({id: nextItemId++, cat, name, desc:'', price});
+    logActivity(`Added new dish: ${name} (${fmt(price)})`);
+    document.getElementById('new-item-name').value = '';
+    document.getElementById('new-item-cat').value = '';
+    document.getElementById('new-item-price').value = '';
+    renderDashMenu();
+    renderMenu();
+  }
+
+  // ---------- DASH: EMPLOYEES ----------
+  function renderDashEmployees(){
+    document.getElementById('emp-count').textContent = employees.length;
+    const tbody = document.getElementById('emp-tbody');
+    tbody.innerHTML = employees.map(e => `
+      <tr>
+        <td>${e.name}</td>
+        <td>${e.role}</td>
+        <td class="mono">${e.phone}</td>
+        <td class="mono">${e.idNo}</td>
+        <td><button class="btn btn-ember btn-sm" onclick="deleteEmployee(${e.id})">Remove</button></td>
+      </tr>`).join('');
+  }
+  function addEmployee(){
+    const name = document.getElementById('new-emp-name').value.trim();
+    const role = document.getElementById('new-emp-role').value.trim();
+    const phone = document.getElementById('new-emp-phone').value.trim();
+    const idNo = document.getElementById('new-emp-id').value.trim();
+    if(!name || !role) return;
+    employees.push({id: nextEmpId++, name, role, phone, idNo});
+    logActivity(`Registered employee: ${name} (${role})`);
+    ['new-emp-name','new-emp-role','new-emp-phone','new-emp-id'].forEach(id => document.getElementById(id).value = '');
+    renderDashEmployees();
+  }
+  function deleteEmployee(id){
+    const e = employees.find(e => e.id === id);
+    employees = employees.filter(e => e.id !== id);
+    logActivity(`Removed employee record: ${e.name}`);
+    renderDashEmployees();
+  }
+
+  // ---------- ACTIVITY LOG ----------
+  function renderActivityLog(){
+    const list = document.getElementById('activity-list');
+    if(activityLog.length === 0){
+      list.innerHTML = '<li style="color:#666;">No activity yet.</li>';
+      return;
+    }
+    list.innerHTML = activityLog.map(a => `<li><span>${a.msg}</span><span class="ts">${a.ts}</span></li>`).join('');
+  }
+
+  // ---------- INIT ----------
+  renderMenu();
+  renderCart();
+  renderDashOrders();
+  renderDashMenu();
+  renderDashEmployees();
+  renderActivityLog();
+</script>
+</body>
+</html>
